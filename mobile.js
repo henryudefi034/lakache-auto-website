@@ -27,8 +27,12 @@ document.addEventListener('DOMContentLoaded',function(){
   ['.intro p','full process'],
   ['.intro p','finished result'],
   ['.lede','real experience'],
-  ['.lede','damaged cars back to life']
+  ['.lede','damaged cars back to life'],
+  ['.pillar p','passion'],
+  ['.pillar p','rebuilds'],
+  ['.pillar p','Cars build more than cars']
  ];
  accents.forEach(function(a){document.querySelectorAll(a[0]).forEach(function(el){wrapPhrase(el,a[1],'brand-red')})});
+ document.querySelectorAll('.pillar small').forEach(function(el,index){wrapPhrase(el,String(index+1).padStart(2,'0'),'brand-red')});
  document.querySelectorAll('.eyebrow,.kicker,.drop').forEach(function(el){wrapPhrase(el,'CURRENT PROJECT','brand-red');wrapPhrase(el,'COMING SOON','brand-red');wrapPhrase(el,'FEATURED','brand-red')});
 });
