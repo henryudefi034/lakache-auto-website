@@ -2,6 +2,10 @@
 .mobile-toggle{display:none;background:transparent;border:0;color:#f5f2ec;width:42px;height:42px;padding:8px;cursor:pointer;align-items:center;justify-content:center;flex-direction:column;gap:5px}
 .mobile-toggle span{display:block;width:23px;height:2px;background:currentColor;transition:transform .2s ease,opacity .2s ease}
 body.menu-open{overflow:hidden}
+/* Brand accent system: red is used deliberately, not as a dominant text color. */
+.brand-red{color:#c92731!important}
+.brand-period{color:#c92731!important;font-weight:inherit}
+.eyebrow .brand-red,.kicker .brand-red,.drop .brand-red{font-weight:800}
 @media(max-width:800px){
  nav{height:64px!important;min-height:64px!important;padding:0 20px!important;position:sticky!important;top:0;z-index:100!important;background:rgba(16,17,15,.98)!important;backdrop-filter:blur(18px)}
  .brand{font-size:12px!important;letter-spacing:2px!important;position:relative;z-index:102}
