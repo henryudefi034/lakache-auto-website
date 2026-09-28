@@ -3,39 +3,46 @@
 .mobile-toggle{display:none;background:transparent;border:0;color:#f5f2ec;width:42px;height:42px;padding:8px;cursor:pointer;align-items:center;justify-content:center;flex-direction:column;gap:5px}
 .mobile-toggle span{display:block;width:23px;height:2px;background:currentColor;transition:transform .2s ease,opacity .2s ease}
 body.menu-open{overflow:hidden}
-/* Brand accent system: red is used deliberately, not as a dominant text color. */
 .brand-red{color:#c92731!important}.brand-period{color:#c92731!important;font-weight:inherit}.eyebrow .brand-red,.kicker .brand-red,.drop .brand-red{font-weight:800}
-/* Shared identity + interaction polish */
 body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 a,button{transition:opacity .2s ease,background-color .2s ease,border-color .2s ease,color .2s ease}
 a:focus-visible,button:focus-visible{outline:2px solid var(--site-red);outline-offset:4px}
-nav{box-shadow:0 1px 0 rgba(255,255,255,.015)}
-nav .brand:hover,nav .links a:hover{opacity:.82}
-nav .brand img{object-fit:contain}
-img{max-width:100%}
-/* Normalize editorial labels across pages built at different stages. */
+nav{box-shadow:0 1px 0 rgba(255,255,255,.015)}nav .brand:hover,nav .links a:hover{opacity:.82}nav .brand img{object-fit:contain}img{max-width:100%}
 .eyebrow,.kicker,.k,.drop{text-transform:uppercase}
-/* Normalize common page width and vertical rhythm without flattening each page's character. */
 .wrap,.inner,.stories-inner,.section-head,.story-grid,.what-head,.cards,.philosophy-box,.close-row,.contact-grid,.direct-row,.social-row,.footer-inner{width:100%;max-width:var(--site-max)}
-footer a:hover{color:#f5f2ec}
-.footer-links a{position:relative}
-.footer-links a:after{content:"";position:absolute;left:0;bottom:-5px;width:0;height:1px;background:var(--site-red);transition:width .2s ease}.footer-links a:hover:after{width:100%}
-/* Make calls-to-action feel consistent throughout the site. */
-.btn{transition:transform .2s ease,background-color .2s ease,border-color .2s ease,opacity .2s ease}.btn:hover{transform:translateY(-2px);opacity:.92}
-.watch{transition:border-color .2s ease,color .2s ease}.garage-card:hover .watch,.card[href]:hover .watch{border-color:var(--site-red)}
-@media(max-width:1100px) and (min-width:801px){nav{padding-left:4vw!important;padding-right:4vw!important}.links{gap:22px!important;font-size:11px!important;letter-spacing:1.35px!important}}
+footer a:hover{color:#f5f2ec}.footer-links a{position:relative}.footer-links a:after{content:"";position:absolute;left:0;bottom:-5px;width:0;height:1px;background:var(--site-red);transition:width .2s ease}.footer-links a:hover:after{width:100%}
+.btn{transition:transform .2s ease,background-color .2s ease,border-color .2s ease,opacity .2s ease}.btn:hover{transform:translateY(-2px);opacity:.92}.watch{transition:border-color .2s ease,color .2s ease}.garage-card:hover .watch,.card[href]:hover .watch{border-color:var(--site-red)}
+/* Individual build pages: preserve their editorial layouts while making them feel like one series. */
+body:has(.facts) .hero.wrap{max-width:1580px!important}
+body:has(.facts) .wrap{max-width:1580px!important}
+body:has(.facts) .hero{padding-top:82px}
+body:has(.facts) .hero .k{font-size:10px;letter-spacing:2.8px}
+body:has(.facts) .hero h1{max-width:1180px}
+body:has(.facts) .hero-image{border-color:#343531}
+body:has(.facts) .facts{background:#141513}
+body:has(.facts) .fact{min-height:100px;display:flex;flex-direction:column;justify-content:center}
+body:has(.facts) .fact small{font-weight:700}
+body:has(.facts) .chapter-copy p:last-child,body:has(.facts) .status-copy p:last-child{margin-bottom:0}
+body:has(.facts) .step{transition:background-color .2s ease}
+body:has(.facts) .step:hover{background:#1d1e1b}
+body:has(.facts) .watch{border-top:1px solid var(--site-line);border-bottom:1px solid var(--site-line)}
+body:has(.facts) .next a,body:has(.facts) a.next{transition:background-color .2s ease}
+body:has(.facts) .next:hover{background:#151614}
+body:has(.facts) .next .arrow{transition:transform .2s ease}
+body:has(.facts) .next:hover .arrow{transform:translateX(6px)}
+body:has(.facts) footer{border-top:1px solid var(--site-line)}
+@media(max-width:1100px) and (min-width:801px){nav{padding-left:4vw!important;padding-right:4vw!important}.links{gap:22px!important;font-size:11px!important;letter-spacing:1.35px!important}body:has(.facts) .hero{padding-top:70px}body:has(.facts) .chapter,body:has(.facts) .timeline,body:has(.facts) .road,body:has(.facts) .numbers,body:has(.facts) .status{padding-top:90px!important;padding-bottom:90px!important}}
 @media(max-width:800px){
  nav{height:64px!important;min-height:64px!important;padding:0 20px!important;position:sticky!important;top:0;z-index:100!important;background:rgba(16,17,15,.98)!important;backdrop-filter:blur(18px)}
  .brand{font-size:12px!important;letter-spacing:2px!important;position:relative;z-index:102}.brand img{width:24px!important;height:24px!important}
  .mobile-toggle{display:flex;position:relative;z-index:102}.mobile-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}.mobile-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}.mobile-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
  nav .links{display:none!important;position:absolute!important;left:0;right:0;top:63px;height:auto!important;padding:18px 20px 26px!important;background:#10110f;border-bottom:1px solid #30312e;flex-direction:column!important;align-items:stretch!important;gap:0!important;font-size:13px!important;letter-spacing:1.6px!important;box-shadow:0 18px 40px rgba(0,0,0,.28)}nav .links.open{display:flex!important}
  nav .links a{height:auto!important;min-height:48px;display:flex!important;align-items:center!important;border-bottom:1px solid rgba(255,255,255,.07);padding:0 4px!important}nav .links a:last-child{border-bottom:0}nav .links a.active:after,nav .links a:hover:after{display:none!important}nav .links a.active{color:#fff}nav .links a.active:before{content:"";width:16px;height:2px;background:var(--site-red);margin-right:10px}
- .hero h1,.intro h1{overflow-wrap:normal;word-break:normal}
- .btn:hover{transform:none}
+ .hero h1,.intro h1{overflow-wrap:normal;word-break:normal}.btn:hover{transform:none}
+ body:has(.facts) .hero{padding-top:52px!important}body:has(.facts) .hero-image{margin-left:0;margin-right:0}body:has(.facts) .fact{min-height:88px}body:has(.facts) .step:hover{background:#171815}body:has(.facts) .next:hover{background:transparent}body:has(.facts) .next:hover .arrow{transform:none}
 }
 @media(max-width:560px){
- .hero h1,.intro h1{font-size:clamp(44px,14vw,60px)!important;line-height:.9!important;letter-spacing:-2.5px!important}.hero p,.intro p,.lede{font-size:14px!important;line-height:1.7!important}
- .section,.hero,.intro{scroll-margin-top:64px}.btn{max-width:100%;white-space:normal;text-align:center}img{max-width:100%;height:auto}
- footer{line-height:1.65}
+ .hero h1,.intro h1{font-size:clamp(44px,14vw,60px)!important;line-height:.9!important;letter-spacing:-2.5px!important}.hero p,.intro p,.lede{font-size:14px!important;line-height:1.7!important}.section,.hero,.intro{scroll-margin-top:64px}.btn{max-width:100%;white-space:normal;text-align:center}img{max-width:100%;height:auto}footer{line-height:1.65}
+ body:has(.facts) .hero .k{font-size:9px!important;letter-spacing:2px!important;line-height:1.5}body:has(.facts) .facts{grid-template-columns:1fr 1fr!important}body:has(.facts) .fact{padding:20px 16px!important;min-height:92px}body:has(.facts) .fact small{font-size:8px!important}body:has(.facts) .fact strong{font-size:13px!important;line-height:1.35}body:has(.facts) .watch .btn{width:min(100%,320px)}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*:before,*:after{transition:none!important;animation:none!important}}
