@@ -1,4 +1,4 @@
-/* Lakache Auto shared mobile pass */
+/* Lakache Auto shared responsive + site polish */
 .mobile-toggle{display:none;background:transparent;border:0;color:#f5f2ec;width:42px;height:42px;padding:8px;cursor:pointer;align-items:center;justify-content:center;flex-direction:column;gap:5px}
 .mobile-toggle span{display:block;width:23px;height:2px;background:currentColor;transition:transform .2s ease,opacity .2s ease}
 body.menu-open{overflow:hidden}
@@ -6,6 +6,12 @@ body.menu-open{overflow:hidden}
 .brand-red{color:#c92731!important}
 .brand-period{color:#c92731!important;font-weight:inherit}
 .eyebrow .brand-red,.kicker .brand-red,.drop .brand-red{font-weight:800}
+/* Shared interaction polish */
+a,button{transition:opacity .2s ease,background-color .2s ease,border-color .2s ease,color .2s ease}
+a:focus-visible,button:focus-visible{outline:2px solid #c92731;outline-offset:4px}
+nav .brand:hover,nav .links a:hover{opacity:.82}
+img{max-width:100%}
+@media(max-width:1100px) and (min-width:801px){nav{padding-left:4vw!important;padding-right:4vw!important}.links{gap:22px!important;font-size:11px!important;letter-spacing:1.35px!important}}
 @media(max-width:800px){
  nav{height:64px!important;min-height:64px!important;padding:0 20px!important;position:sticky!important;top:0;z-index:100!important;background:rgba(16,17,15,.98)!important;backdrop-filter:blur(18px)}
  .brand{font-size:12px!important;letter-spacing:2px!important;position:relative;z-index:102}
@@ -30,3 +36,4 @@ body.menu-open{overflow:hidden}
  .btn{max-width:100%;white-space:normal;text-align:center}
  img{max-width:100%;height:auto}
 }
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*:before,*:after{transition:none!important;animation:none!important}}
