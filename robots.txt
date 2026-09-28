@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://henryudefi034.github.io/lakache-auto-website/sitemap.xml
