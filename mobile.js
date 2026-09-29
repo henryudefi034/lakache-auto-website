@@ -1,5 +1,10 @@
 document.addEventListener('DOMContentLoaded',function(){
  var nav=document.querySelector('nav');var links=nav&&nav.querySelector('.links');
+ /* Enterprise expansion: expose vehicle inventory site-wide without rewriting every approved page. */
+ if(links&&!links.querySelector('a[href="cars-for-sale.html"]')){
+  var sale=document.createElement('a');sale.href='cars-for-sale.html';sale.textContent='CARS FOR SALE';
+  var shop=links.querySelector('a[href="shop.html"]');if(shop)links.insertBefore(sale,shop);else links.appendChild(sale);
+ }
  if(nav&&links){var button=document.createElement('button');button.className='mobile-toggle';button.type='button';button.setAttribute('aria-label','Open navigation');button.setAttribute('aria-expanded','false');button.innerHTML='<span></span><span></span><span></span>';nav.appendChild(button);function closeMenu(){links.classList.remove('open');document.body.classList.remove('menu-open');button.setAttribute('aria-expanded','false');button.setAttribute('aria-label','Open navigation')}button.addEventListener('click',function(){var open=!links.classList.contains('open');links.classList.toggle('open',open);document.body.classList.toggle('menu-open',open);button.setAttribute('aria-expanded',String(open));button.setAttribute('aria-label',open?'Close navigation':'Open navigation')});links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeMenu)});window.addEventListener('resize',function(){if(window.innerWidth>800)closeMenu()});document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu()})}
 
  /* Final site audit: normalize brand language and basic link/accessibility behavior. */
