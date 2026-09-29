@@ -2,6 +2,17 @@ document.addEventListener('DOMContentLoaded',function(){
  var nav=document.querySelector('nav');var links=nav&&nav.querySelector('.links');
  if(nav&&links){var button=document.createElement('button');button.className='mobile-toggle';button.type='button';button.setAttribute('aria-label','Open navigation');button.setAttribute('aria-expanded','false');button.innerHTML='<span></span><span></span><span></span>';nav.appendChild(button);function closeMenu(){links.classList.remove('open');document.body.classList.remove('menu-open');button.setAttribute('aria-expanded','false');button.setAttribute('aria-label','Open navigation')}button.addEventListener('click',function(){var open=!links.classList.contains('open');links.classList.toggle('open',open);document.body.classList.toggle('menu-open',open);button.setAttribute('aria-expanded',String(open));button.setAttribute('aria-label',open?'Close navigation':'Open navigation')});links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeMenu)});window.addEventListener('resize',function(){if(window.innerWidth>800)closeMenu()});document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu()})}
 
+ /* Final site audit: normalize brand language and basic link/accessibility behavior. */
+ document.querySelectorAll('footer').forEach(function(footer){
+  var text=footer.textContent||'';
+  if(/CARS\s*[•·]\s*BUILDS\s*[•·]\s*LIFE/i.test(text)||/CARS\s+BUILDS\s+LIFE/i.test(text)){
+   footer.innerHTML=footer.innerHTML.replace(/CARS\s*(?:•|·)\s*(?:<[^>]+>)*BUILDS(?:<\/[^>]+>)*\s*(?:•|·)\s*LIFE/gi,'CARS BUILD LIFE').replace(/CARS\s+BUILDS\s+LIFE/gi,'CARS BUILD LIFE');
+  }
+ });
+ document.querySelectorAll('a[target="_blank"]').forEach(function(a){var rel=(a.getAttribute('rel')||'').split(/\s+/).filter(Boolean);if(rel.indexOf('noopener')<0)rel.push('noopener');a.setAttribute('rel',rel.join(' '))});
+ var origin=document.querySelector('.beginning');if(origin&&!origin.id)origin.id='origin';
+ if(nav){nav.querySelectorAll('a').forEach(function(a){var href=a.getAttribute('href');if(!href)return;var current=location.pathname.split('/').pop()||'index.html';if(href===current||href==='index.html'&&current===''){a.setAttribute('aria-current','page')}})}
+
  /* Lakache red accent pass. Keep the palette mostly monochrome and let red punctuate the story. */
  function wrapPhrase(root,phrase,cls){
   if(!root||root.querySelector('.'+cls))return;
