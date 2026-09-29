@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded',function(){
  /* Final site audit: normalize brand language and basic link/accessibility behavior. */
  document.querySelectorAll('footer').forEach(function(footer){
   var text=footer.textContent||'';
-  if(/CARS\s*[•·]\s*BUILDS\s*[•·]\s*LIFE/i.test(text)||/CARS\s+BUILDS\s+LIFE/i.test(text)){
-   footer.innerHTML=footer.innerHTML.replace(/CARS\s*(?:•|·)\s*(?:<[^>]+>)*BUILDS(?:<\/[^>]+>)*\s*(?:•|·)\s*LIFE/gi,'CARS BUILD LIFE').replace(/CARS\s+BUILDS\s+LIFE/gi,'CARS BUILD LIFE');
+  if(/CARS\s*[•·]\s*BUILDS?\s*[•·]\s*LIFE/i.test(text)||/CARS\s+BUILDS?\s+LIFE/i.test(text)){
+   footer.innerHTML=footer.innerHTML.replace(/CARS\s*(?:•|·)\s*(?:<[^>]+>)*BUILDS?(?:<\/[^>]+>)*\s*(?:•|·)\s*LIFE/gi,'CARS BUILD LIFE').replace(/CARS\s+BUILDS?\s+LIFE/gi,'CARS BUILD LIFE');
   }
  });
  document.querySelectorAll('a[target="_blank"]').forEach(function(a){var rel=(a.getAttribute('rel')||'').split(/\s+/).filter(Boolean);if(rel.indexOf('noopener')<0)rel.push('noopener');a.setAttribute('rel',rel.join(' '))});
