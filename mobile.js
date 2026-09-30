@@ -80,4 +80,21 @@ document.addEventListener('DOMContentLoaded',function(){
  accents.forEach(function(a){document.querySelectorAll(a[0]).forEach(function(el){wrapPhrase(el,a[1],'brand-red')})});
  document.querySelectorAll('.pillar small').forEach(function(el,index){wrapPhrase(el,String(index+1).padStart(2,'0'),'brand-red')});
  document.querySelectorAll('.eyebrow,.kicker,.drop').forEach(function(el){wrapPhrase(el,'CURRENT PROJECT','brand-red');wrapPhrase(el,'COMING SOON','brand-red');wrapPhrase(el,'FEATURED','brand-red')});
+
+ /* Premium post-submit state for vehicle inquiries. Replace the completed form with a clean confirmation and route back to inventory. */
+ if(currentPage==='contact.html'){
+  var inquiryForm=document.getElementById('buyer-form');var inquiryStatus=document.getElementById('form-status');
+  if(inquiryForm&&inquiryStatus){
+   var successObserver=new MutationObserver(function(){
+    if(!inquiryStatus.classList.contains('success')||inquiryForm.dataset.confirmed==='true')return;
+    inquiryForm.dataset.confirmed='true';
+    var chosenName=(document.getElementById('vehicle')&&document.getElementById('vehicle').value)||'the vehicle';
+    Array.prototype.forEach.call(inquiryForm.children,function(child){if(child!==inquiryStatus)child.style.display='none'});
+    inquiryStatus.style.display='block';inquiryStatus.style.marginTop='0';inquiryStatus.style.padding='34px 30px';inquiryStatus.style.border='1px solid #30312e';inquiryStatus.style.borderLeft='3px solid #f4f1ea';
+    inquiryStatus.innerHTML='<div style="font-size:10px;letter-spacing:2px;color:#8c8981;font-weight:800;margin-bottom:14px">MESSAGE SENT</div><strong style="display:block;font-size:28px;line-height:1.05;margin-bottom:14px">INQUIRY RECEIVED.</strong><div style="color:#aaa69e;font-size:14px;line-height:1.75;max-width:620px">Thank you for your interest in <strong style="color:#f5f2ec">'+chosenName+'</strong>. Your inquiry has been sent to Lakache Auto. We’ll review your message and get back to you using your preferred contact method.</div><a href="cars-for-sale.html" style="display:inline-block;margin-top:28px;padding:15px 19px;background:#f4f1ea;color:#111;font-size:10px;font-weight:800;letter-spacing:1.4px;text-decoration:none">← BACK TO CARS FOR SALE</a>';
+    var hint=inquiryForm.parentElement&&inquiryForm.parentElement.querySelector('.hint');var fallback=inquiryForm.parentElement&&inquiryForm.parentElement.querySelector('.fallback');if(hint)hint.style.display='none';if(fallback)fallback.style.display='none';
+   });
+   successObserver.observe(inquiryStatus,{attributes:true,attributeFilter:['class']});
+  }
+ }
 });
