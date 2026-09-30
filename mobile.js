@@ -7,6 +7,35 @@ document.addEventListener('DOMContentLoaded',function(){
  }
  if(nav&&links){var button=document.createElement('button');button.className='mobile-toggle';button.type='button';button.setAttribute('aria-label','Open navigation');button.setAttribute('aria-expanded','false');button.innerHTML='<span></span><span></span><span></span>';nav.appendChild(button);function closeMenu(){links.classList.remove('open');document.body.classList.remove('menu-open');button.setAttribute('aria-expanded','false');button.setAttribute('aria-label','Open navigation')}button.addEventListener('click',function(){var open=!links.classList.contains('open');links.classList.toggle('open',open);document.body.classList.toggle('menu-open',open);button.setAttribute('aria-expanded',String(open));button.setAttribute('aria-label',open?'Close navigation':'Open navigation')});links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeMenu)});window.addEventListener('resize',function(){if(window.innerWidth>800)closeMenu()});document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu()})}
 
+ /* Vehicle inquiry routing: each listing carries its own identity into Contact. */
+ var vehicleCatalog={
+  gti:{name:'2024 Volkswagen GTI Autobahn',short:'THE GTI',subject:'2024 VW GTI Autobahn - Buyer Inquiry',question:'Questions about the GTI:'},
+  bmw550i:{name:'2016 BMW 550i M Sport',short:'THE BMW 550i',subject:'2016 BMW 550i M Sport - Buyer Inquiry',question:'Questions about the BMW 550i:'}
+ };
+ var currentPage=location.pathname.split('/').pop()||'index.html';
+ var pageVehicle=currentPage==='vehicle-listing-gti-demo.html'?'gti':currentPage==='vehicle-listing-bmw-550i.html'?'bmw550i':'';
+ if(pageVehicle){
+  document.querySelectorAll('a[href="contact.html"]').forEach(function(a){
+   if(a.closest('.cta')||/ASK ABOUT/i.test(a.textContent||''))a.href='contact.html?vehicle='+encodeURIComponent(pageVehicle)+'#vehicle-inquiry';
+  });
+ }
+ if(currentPage==='contact.html'){
+  var key=new URLSearchParams(location.search).get('vehicle');var vehicle=vehicleCatalog[key];
+  var buyer=document.querySelector('#vehicle-inquiry');
+  if(buyer){
+   var vehicleBox=buyer.querySelector('.vehicle');var buyerCopy=buyer.querySelector('.buyer-copy');var mailbtn=buyer.querySelector('.mailbtn');
+   if(vehicle){
+    if(vehicleBox){var small=vehicleBox.querySelector('small'),strong=vehicleBox.querySelector('strong');if(small)small.textContent='VEHICLE INQUIRY';if(strong)strong.textContent=vehicle.name;}
+    if(buyerCopy)buyerCopy.textContent='Send the basics that help us respond intelligently. The vehicle is already identified in the email subject so your inquiry does not get mixed in with general messages.';
+    if(mailbtn){var body='Name:\n\nPhone:\n\nLocation:\n\nBuying timeline:\n\nCash / Financing / Undecided:\n\nTrade-in (if any):\n\n'+vehicle.question+'\n';mailbtn.href='mailto:info@lakache.com?subject='+encodeURIComponent(vehicle.subject)+'&body='+encodeURIComponent(body);mailbtn.textContent='ASK ABOUT '+vehicle.short+' →';}
+   }else{
+    if(vehicleBox){var small2=vehicleBox.querySelector('small'),strong2=vehicleBox.querySelector('strong');if(small2)small2.textContent='VEHICLE BUYER INQUIRY';if(strong2)strong2.textContent='Which vehicle are you interested in?';}
+    if(buyerCopy)buyerCopy.textContent='Coming from a vehicle listing? Use the inquiry button on that car and we will identify it automatically. For a general vehicle question, you can still contact Lakache Auto here.';
+    if(mailbtn){var genericBody='Name:\n\nPhone:\n\nLocation:\n\nVehicle you are interested in:\n\nBuying timeline:\n\nQuestions / message:\n';mailbtn.href='mailto:info@lakache.com?subject='+encodeURIComponent('Lakache Auto - Vehicle Buyer Inquiry')+'&body='+encodeURIComponent(genericBody);mailbtn.textContent='VEHICLE INQUIRY →';}
+   }
+  }
+ }
+
  /* Final site audit: normalize brand language and basic link/accessibility behavior. */
  document.querySelectorAll('footer').forEach(function(footer){
   var text=footer.textContent||'';
