@@ -1,35 +1,21 @@
 (function(){
  var galleries={
   'build-gti.html':{
-   anchor:'.generation-pair',
-   position:'after',
-   eyebrow:'06 / FINAL CONDITION',
-   title:'THE FINISHED GTI.',
-   description:'The finished build is documented in detail — exterior, interior and final-condition photography. Open any image for the full-screen viewer or continue through the complete photo archive.',
-   caption:'2024 VW GTI AUTOBAHN / FINAL CONDITION',
-   alt:'2024 Volkswagen GTI Autobahn final condition photo',
-   label:'FINAL',
-   initial:24,
-   files:Array.from({length:51},function(_,i){return '2024-vw-gti-final-'+(i+1)+'.jpeg'})
+   anchor:'.generation-pair',position:'after',eyebrow:'06 / FINAL CONDITION',title:'THE FINISHED GTI.',description:'The finished build is documented in detail — exterior, interior and final-condition photography. Open any image for the full-screen viewer or continue through the complete photo archive.',caption:'2024 VW GTI AUTOBAHN / FINAL CONDITION',alt:'2024 Volkswagen GTI Autobahn final condition photo',label:'FINAL',initial:24,files:Array.from({length:51},function(_,i){return '2024-vw-gti-final-'+(i+1)+'.jpeg'})
   },
   'vehicle-listing-gti.html':{
-   anchor:'.gallery, .photos, .vehicle-gallery, main',
-   position:'append',
-   eyebrow:'PHOTO ARCHIVE',
-   title:'EXPLORE THE GTI.',
-   description:'Review the finished condition in detail. Open any image for the full-screen viewer and continue through the complete photographic record.',
-   caption:'2024 VW GTI AUTOBAHN / VEHICLE PHOTOS',
-   alt:'2024 Volkswagen GTI Autobahn vehicle photo',
-   label:'PHOTO',
-   initial:24,
-   files:Array.from({length:51},function(_,i){return '2024-vw-gti-final-'+(i+1)+'.jpeg'})
+   anchor:'.gallery, .photos, .vehicle-gallery, main',position:'append',eyebrow:'PHOTO ARCHIVE',title:'EXPLORE THE GTI.',description:'Review the finished condition in detail. Open any image for the full-screen viewer and continue through the complete photographic record.',caption:'2024 VW GTI AUTOBAHN / VEHICLE PHOTOS',alt:'2024 Volkswagen GTI Autobahn vehicle photo',label:'PHOTO',initial:24,files:Array.from({length:51},function(_,i){return '2024-vw-gti-final-'+(i+1)+'.jpeg'})
+  },
+  'vehicle-listing-hyundai-elantra-gt.html':{
+   anchor:'.gallery-anchor',position:'append',eyebrow:'COMPLETE PHOTO ARCHIVE',title:'EXPLORE THE ELANTRA GT.',description:'Exterior, interior and finished-condition photography. Open any image for the full-screen viewer and continue through the complete photographic record.',caption:'2018 HYUNDAI ELANTRA GT / VEHICLE PHOTOS',alt:'2018 Hyundai Elantra GT vehicle photo',label:'PHOTO',initial:18,
+   files:['2018-hyundai-elantra-gt-final-012.jpeg','2018-hyundai-elantra-gt-final-013.jpeg','2018-hyundai-elantra-gt-final-014.jpeg','2018-hyundai-elantra-gt-final-015.jpeg','2018-hyundai-elantra-gt-final-016.jpeg','2018-hyundai-elantra-gt-final-017.jpeg','2018-hyundai-elantra-gt-final-018.jpeg','2018-hyundai-elantra-gt-final-019.jpeg','2018-hyundai-elantra-gt-final-0110.jpeg','2018-hyundai-elantra-gt-final-0111.jpeg','2018-hyundai-elantra-gt-final-0112.jpeg','2018-hyundai-elantra-gt-final-0113.jpeg','2018-hyundai-elantra-gt-final-0114.jpeg','2018-hyundai-elantra-gt-final-0115.jpeg','2018-hyundai-elantra-gt-final-0116.jpeg','2018-hyundai-elantra-gt-final-0117.jpeg','2018-hyundai-elantra-gt-final-0118.jpeg','2018-hyundai-elantra-gt-final-0119.jpeg','2018-hyundai-elantra-gt-final-0120.jpeg','2018-hyundai-elantra-gt-final-0121.jpeg','2018-hyundai-elantra-gt-final-0122.jpeg','2018-hyundai-elantra-gt-final-0130.JPG','2018-hyundai-elantra-gt-final-0131.JPG','2018-hyundai-elantra-gt-final-0132.JPG','2018-hyundai-elantra-gt-final-0133.JPG','2018-hyundai-elantra-gt-final-0134.JPG','2018-hyundai-elantra-gt-final-0135.JPG','2018-hyundai-elantra-gt-final-0136.JPG']
   }
  };
  function init(){
   var page=location.pathname.split('/').pop()||'index.html',cfg=galleries[page];if(!cfg)return;
   var existing=document.querySelector('.vehicle-photo-archive[data-gallery-managed="true"]');if(existing)return;
   var anchor=document.querySelector(cfg.anchor);if(!anchor)return;
-  var files=cfg.files||[],total=files.length;if(!total)return,initial=Math.min(cfg.initial||24,total);
+  var files=cfg.files||[],total=files.length;if(!total)return;var initial=Math.min(cfg.initial||24,total);
   var section=document.createElement('section');section.className='vehicle-photo-archive';section.dataset.galleryManaged='true';
   section.innerHTML='<div class="vehicle-photo-head"><div class="k">'+cfg.eyebrow+'</div><h2>'+cfg.title+'</h2><p>'+cfg.description+'</p></div><div class="vehicle-photo-grid"></div><div class="vehicle-gallery-actions"><button class="vehicle-gallery-button" type="button">VIEW ALL '+total+' PHOTOS →</button></div>';
   if(cfg.position==='append')anchor.appendChild(section);else anchor.parentNode.insertBefore(section,anchor.nextSibling);
