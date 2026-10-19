@@ -8,16 +8,6 @@ document.addEventListener('DOMContentLoaded',function(){
  var galleryPages=['build-gti.html','vehicle-listing-gti.html','vehicle-listing-hyundai-elantra-gt.html'];
  if(page==='build-gti.html'){var hero=document.querySelector('.hero-image');if(hero){hero.src='2024-vw-gti-final-1.jpeg';hero.alt='Finished blue 2024 Volkswagen GTI Autobahn'}}
  if(galleryPages.indexOf(page)>-1){if(!document.querySelector('link[href="vehicle-gallery.css"]')){var css=document.createElement('link');css.rel='stylesheet';css.href='vehicle-gallery.css';document.head.appendChild(css)}if(!document.querySelector('script[src="vehicle-gallery.js"]')){var script=document.createElement('script');script.src='vehicle-gallery.js';script.defer=true;document.body.appendChild(script)}}
- if(page==='cars-for-sale.html'){
-   var inventory=document.querySelector('.inventory-grid');
-   if(inventory&&!inventory.querySelector('a[href="vehicle-listing-hyundai-elantra-gt.html"]')){
-     var elantra=document.createElement('article');
-     elantra.className='vehicle';
-     elantra.innerHTML='<a class="media" href="vehicle-listing-hyundai-elantra-gt.html"><img src="2018-hyundai-elantra-gt-final-012.jpeg" alt="2018 Hyundai Elantra GT"><span class="badge">DETAILS PENDING</span><span class="docbadge">PHOTO ARCHIVE</span></a><div class="body"><div class="kicker">LAKACHE INVENTORY / 003</div><h3>2018 Hyundai<br>Elantra GT</h3><p>A detailed visual record of the finished Elantra GT, with exterior, interior and condition photography available in the complete vehicle gallery.</p><div class="facts"><div class="fact"><small>YEAR</small><strong>2018</strong></div><div class="fact"><small>MODEL</small><strong>Elantra GT</strong></div><div class="fact"><small>DETAILS</small><strong>Pending verification</strong></div></div><div class="actions"><a class="btn" href="vehicle-listing-hyundai-elantra-gt.html">VIEW ELANTRA GT →</a><a class="btn alt" href="vehicle-listing-hyundai-elantra-gt.html">VIEW PHOTO ARCHIVE</a></div></div>';
-     inventory.appendChild(elantra);
-     var count=document.querySelector('.inventory-bar .count');if(count)count.innerHTML='<b>03</b> VEHICLES CURRENTLY LISTED';
-   }
- }
  var vehicleCatalog={gti:{name:'2024 Volkswagen GTI Autobahn',short:'THE GTI',subject:'2024 VW GTI Autobahn - Buyer Inquiry',question:'Questions about the GTI:'},bmw550i:{name:'2016 BMW 550i M Sport',short:'THE BMW 550i',subject:'2016 BMW 550i M Sport - Buyer Inquiry',question:'Questions about the BMW 550i:'},elantra:{name:'2018 Hyundai Elantra GT',short:'THE ELANTRA GT',subject:'2018 Hyundai Elantra GT - Buyer Inquiry',question:'Questions about the Elantra GT:'}};
  var pageVehicle=(page==='vehicle-listing-gti.html'||page==='vehicle-listing-gti-demo.html')?'gti':page==='vehicle-listing-bmw-550i.html'?'bmw550i':page==='vehicle-listing-hyundai-elantra-gt.html'?'elantra':'';
  if(pageVehicle)document.querySelectorAll('a[href="contact.html"]').forEach(function(a){if(a.closest('.cta')||/ASK ABOUT/i.test(a.textContent||''))a.href='contact.html?vehicle='+encodeURIComponent(pageVehicle)+'#vehicle-inquiry'});
