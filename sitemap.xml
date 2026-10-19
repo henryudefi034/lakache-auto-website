@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://lakache.com/</loc><priority>1.0</priority></url>
-  <url><loc>https://lakache.com/builds.html</loc><priority>0.9</priority></url>
-  <url><loc>https://lakache.com/build-gti.html</loc><priority>0.8</priority></url>
-  <url><loc>https://lakache.com/build-vw-gti-2017.html</loc><priority>0.8</priority></url>
-  <url><loc>https://lakache.com/build-bmw-550i.html</loc><priority>0.8</priority></url>
-  <url><loc>https://lakache.com/build-genesis-g80.html</loc><priority>0.8</priority></url>
-  <url><loc>https://lakache.com/build-lexus-gx460.html</loc><priority>0.8</priority></url>
-  <url><loc>https://lakache.com/ownership.html</loc><priority>0.8</priority></url>
-  <url><loc>https://lakache.com/cars-for-sale.html</loc><priority>0.9</priority></url>
-  <url><loc>https://lakache.com/vehicle-listing-gti.html</loc><priority>0.9</priority></url>
-  <url><loc>https://lakache.com/vehicle-listing-bmw-550i.html</loc><priority>0.9</priority></url>
-  <url><loc>https://lakache.com/vehicle-intake.html</loc><priority>0.8</priority></url>
-  <url><loc>https://lakache.com/shop.html</loc><priority>0.6</priority></url>
-  <url><loc>https://lakache.com/about.html</loc><priority>0.7</priority></url>
-  <url><loc>https://lakache.com/contact.html</loc><priority>0.6</priority></url>
+  <url><loc>https://lakacheautos.com/</loc></url>
+  <url><loc>https://lakacheautos.com/builds.html</loc></url>
+  <url><loc>https://lakacheautos.com/build-gti.html</loc></url>
+  <url><loc>https://lakacheautos.com/build-bmw-550i.html</loc></url>
+  <url><loc>https://lakacheautos.com/build-genesis-g80.html</loc></url>
+  <url><loc>https://lakacheautos.com/build-lexus-gx460.html</loc></url>
+  <url><loc>https://lakacheautos.com/ownership.html</loc></url>
+  <url><loc>https://lakacheautos.com/cars-for-sale.html</loc></url>
+  <url><loc>https://lakacheautos.com/vehicle-listing-gti.html</loc></url>
+  <url><loc>https://lakacheautos.com/vehicle-listing-bmw-550i.html</loc></url>
+  <url><loc>https://lakacheautos.com/vehicle-intake.html</loc></url>
+  <url><loc>https://lakacheautos.com/international-buyers.html</loc></url>
+  <url><loc>https://lakacheautos.com/shop.html</loc></url>
+  <url><loc>https://lakacheautos.com/about.html</loc></url>
+  <url><loc>https://lakacheautos.com/contact.html</loc></url>
+  <url><loc>https://lakacheautos.com/privacy-policy.html</loc></url>
+  <url><loc>https://lakacheautos.com/website-terms.html</loc></url>
+  <url><loc>https://lakacheautos.com/vehicle-disclosures.html</loc></url>
 </urlset>
