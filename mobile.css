@@ -39,3 +39,23 @@ body:has(.project-grid) .coming-mark{font-size:28px!important}
 /* Mobile navigation accessibility and long-menu handling — launch QA. */
 @media(max-width:800px){nav .links.open{max-height:calc(100dvh - 64px)!important;overflow-y:auto!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important}nav .links a:focus-visible,.mobile-toggle:focus-visible{outline:3px solid #d71920!important;outline-offset:3px!important}nav .links a[aria-current="page"]{color:#bd1720!important;font-weight:900!important}.mobile-toggle{touch-action:manipulation!important;min-width:44px!important;min-height:44px!important;align-items:center!important;justify-content:center!important}}
 @media(max-width:560px){nav .brand{max-width:calc(100vw - 108px)!important}nav .links.open{padding-bottom:max(26px,env(safe-area-inset-bottom))!important}}
+
+
+/* Readability pass: interior pages only; homepage typography remains unchanged. */
+@media(min-width:801px){
+  body:not(:has(.quick-grid)) .ledger small{font-size:11px!important;letter-spacing:1.15px!important;font-weight:800!important;line-height:1.45!important}
+  body:not(:has(.quick-grid)) .ledger strong{font-size:17px!important;line-height:1.45!important;margin-top:7px!important}
+  body:not(:has(.quick-grid)) .eyebrow,
+  body:not(:has(.quick-grid)) .body .type,
+  body:not(:has(.quick-grid)) .fact small{font-size:11px!important;line-height:1.45!important}
+  body:not(:has(.quick-grid)) .body>p,
+  body:not(:has(.quick-grid)) .principle p{font-size:15px!important;line-height:1.65!important}
+  body:not(:has(.quick-grid)) .fact strong{font-size:14px!important;line-height:1.4!important}
+  body:not(:has(.quick-grid)) .project-link{font-size:12px!important;line-height:1.5!important}
+}
+@media(max-width:800px){
+  body:not(:has(.quick-grid)) .ledger small{font-size:10px!important;line-height:1.5!important}
+  body:not(:has(.quick-grid)) .ledger strong{font-size:15px!important;line-height:1.4!important}
+  body:not(:has(.quick-grid)) .body>p{font-size:14px!important;line-height:1.6!important}
+  body:not(:has(.quick-grid)) .fact strong{font-size:13px!important}
+}
