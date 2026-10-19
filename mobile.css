@@ -59,3 +59,32 @@ body:has(.project-grid) .coming-mark{font-size:28px!important}
   body:not(:has(.quick-grid)) .body>p{font-size:14px!important;line-height:1.6!important}
   body:not(:has(.quick-grid)) .fact strong{font-size:13px!important}
 }
+
+
+/* Consistent summary-strip typography across interior pages, matching home quick cards. */
+body:not(:has(.quick-grid)) .journal small,
+body:not(:has(.quick-grid)) .promise small,
+body:not(:has(.quick-grid)) .identity small,
+body:not(:has(.quick-grid)) .route small,
+body:not(:has(.quick-grid)) .ledger small{
+  font-size:12px!important;letter-spacing:.85px!important;line-height:1.5!important;font-weight:700!important;
+}
+body:not(:has(.quick-grid)) .journal strong,
+body:not(:has(.quick-grid)) .promise strong,
+body:not(:has(.quick-grid)) .identity strong,
+body:not(:has(.quick-grid)) .route strong,
+body:not(:has(.quick-grid)) .ledger strong{
+  font-size:16px!important;line-height:1.5!important;font-weight:800!important;
+}
+@media(max-width:800px){
+  body:not(:has(.quick-grid)) .journal small,
+  body:not(:has(.quick-grid)) .promise small,
+  body:not(:has(.quick-grid)) .identity small,
+  body:not(:has(.quick-grid)) .route small,
+  body:not(:has(.quick-grid)) .ledger small{font-size:11px!important}
+  body:not(:has(.quick-grid)) .journal strong,
+  body:not(:has(.quick-grid)) .promise strong,
+  body:not(:has(.quick-grid)) .identity strong,
+  body:not(:has(.quick-grid)) .route strong,
+  body:not(:has(.quick-grid)) .ledger strong{font-size:16px!important}
+}
