@@ -62,6 +62,40 @@ Deno.serve(async(req)=>{
         if(!notice.ok)console.error("CRM notification failed",{status:notice.status,inquiryId:inquiry.data.id});
       }catch(err){console.error("CRM notification exception",{inquiryId:inquiry.data.id,error:String(err)})}
     }else console.error("CRM notification key missing",{inquiryId:inquiry.data.id});
+
+    // Transactional receipt confirmation. Never imply eligibility or availability.
+    // This is independent of the CRM save and the internal notification.
+    if(resendKey){
+      try{
+        const receipt=await fetch("https://api.resend.com/emails",{
+          method:"POST",
+          headers:{"Authorization":`Bearer ${resendKey}`,"Content-Type":"application/json"},
+          body:JSON.stringify({
+            from:"Lakache Auto <notifications@lakacheautos.com>",
+            to:[email],
+            reply_to:"sales@lakacheautos.com",
+            subject:"We received your inquiry | Lakache Auto",
+            text:[
+              `Hello ${name},`,
+              "",
+              "Thank you for contacting Lakache Auto. We received your wholesale vehicle inquiry.",
+              `Vehicle interest: ${vehicle||"General inquiry"}`,
+              `Reference: ${inquiry.data.id}`,
+              "",
+              "Our team will review your request and follow up using the contact details you provided. We may need to confirm business and purchasing eligibility before discussing transaction terms.",
+              "This acknowledgment does not confirm vehicle availability, pricing, eligibility, or acceptance of any transaction.",
+              "",
+              "If you need to correct your inquiry, reply to this email and include the reference above.",
+              "",
+              "Lakache Auto",
+              "sales@lakacheautos.com",
+              "https://lakacheautos.com"
+            ].join("\\n")
+          })
+        });
+        if(!receipt.ok)console.error("CRM buyer acknowledgment failed",{status:receipt.status,inquiryId:inquiry.data.id});
+      }catch(err){console.error("CRM buyer acknowledgment exception",{inquiryId:inquiry.data.id,error:String(err)})}
+    }
     return reply(200,{ok:true});
   }catch(e){console.error("CRM ingestion error",e);return reply(500,{error:"Unable to save inquiry. Please try again."})}
 });
