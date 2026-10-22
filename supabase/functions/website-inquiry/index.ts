@@ -20,6 +20,8 @@ Deno.serve(async(req)=>{
   const message=clean(data.message,4000),vehicle=clean(data.vehicle_interest,200);
   const country=clean(data.destination_country,100),company=clean(data.company,150);
   const buyerType=clean(data.buyer_type,100),token=clean(data.turnstile_token,3000);
+  const submissionId=clean(data.submission_id,36).toLowerCase();
+  if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(submissionId))return reply(400,{error:"Invalid submission identifier"});
   if(name.length<2||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||!message||!token)return reply(400,{error:"Name, valid email, message and verification required"});
   const secret=Deno.env.get("TURNSTILE_SECRET_KEY");
   const service=Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
@@ -30,11 +32,22 @@ Deno.serve(async(req)=>{
     const result=await verification.json();
     if(!result.success||result.hostname!=="lakacheautos.com")return reply(403,{error:"Verification failed. Please try again."});
     const db=createClient(url,service,{auth:{persistSession:false,autoRefreshToken:false}});
+    // A repeated, already-committed submission must never send emails again.
+    const existing=await db.from("crm_inquiries").select("id").eq("submission_id",submissionId).maybeSingle();
+    if(existing.error)throw existing.error;
+    if(existing.data)return reply(200,{ok:true,duplicate:true});
     // New record per inquiry, avoiding accidental merges with unrelated buyers sharing email.
     const buyer=await db.from("crm_buyers").insert({full_name:name,email,phone:phone||null,company:company||null,buyer_type:buyerType||null,destination_country:country||null,marketing_consent:false,verification_status:"unverified"}).select("id").single();
     if(buyer.error)throw buyer.error;
-    const inquiry=await db.from("crm_inquiries").insert({buyer_id:buyer.data.id,vehicle_interest:vehicle||null,message,source:"website",status:"new"}).select("id").single();
-    if(inquiry.error){await db.from("crm_buyers").delete().eq("id",buyer.data.id);throw inquiry.error}
+    const inquiry=await db.from("crm_inquiries").insert({buyer_id:buyer.data.id,vehicle_interest:vehicle||null,message,source:"website",status:"new",submission_id:submissionId}).select("id").single();
+    if(inquiry.error){
+      const cleanup=await db.from("crm_buyers").delete().eq("id",buyer.data.id);
+      if(cleanup.error)console.error("CRM duplicate cleanup failed",{code:cleanup.error.code});
+      if(inquiry.error.code==="23505" && /submission_id/i.test([inquiry.error.message,inquiry.error.details,inquiry.error.hint].join(" "))){
+        return reply(200,{ok:true,duplicate:true});
+      }
+      throw inquiry.error;
+    }
 
     // Record Resend API acceptance, not final inbox delivery. Keep failures nonfatal.
     const trackEmail=async(kind:"sales"|"buyer",status:"accepted"|"failed")=>{
