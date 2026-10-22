@@ -36,6 +36,18 @@ Deno.serve(async(req)=>{
     const inquiry=await db.from("crm_inquiries").insert({buyer_id:buyer.data.id,vehicle_interest:vehicle||null,message,source:"website",status:"new"}).select("id").single();
     if(inquiry.error){await db.from("crm_buyers").delete().eq("id",buyer.data.id);throw inquiry.error}
 
+    // Record Resend API acceptance, not final inbox delivery. Keep failures nonfatal.
+    const trackEmail=async(kind:"sales"|"buyer",status:"accepted"|"failed")=>{
+      const column=kind==="sales"?"sales_email_status":"buyer_email_status";
+      const timeColumn=kind==="sales"?"sales_email_sent_at":"buyer_email_sent_at";
+      try{
+        const update=await db.from("crm_inquiries").update({
+          [column]:status,
+          [timeColumn]:status==="accepted"?new Date().toISOString():null
+        }).eq("id",inquiry.data.id);
+        if(update.error)console.error("CRM email tracking update failed",{kind,inquiryId:inquiry.data.id,code:update.error.code});
+      }catch(err){console.error("CRM email tracking exception",{kind,inquiryId:inquiry.data.id,error:String(err)})}
+    };
     // A notification failure never rolls back the successfully saved inquiry.
     const resendKey=Deno.env.get("RESEND_API_KEY");
     if(resendKey){
@@ -60,8 +72,9 @@ Deno.serve(async(req)=>{
           })
         });
         if(!notice.ok)console.error("CRM notification failed",{status:notice.status,inquiryId:inquiry.data.id});
-      }catch(err){console.error("CRM notification exception",{inquiryId:inquiry.data.id,error:String(err)})}
-    }else console.error("CRM notification key missing",{inquiryId:inquiry.data.id});
+        await trackEmail("sales",notice.ok?"accepted":"failed");
+      }catch(err){console.error("CRM notification exception",{inquiryId:inquiry.data.id,error:String(err)});await trackEmail("sales","failed")}
+    }else {console.error("CRM notification key missing",{inquiryId:inquiry.data.id});await trackEmail("sales","failed")}
 
     // Transactional receipt confirmation. Never imply eligibility or availability.
     // This is independent of the CRM save and the internal notification.
@@ -90,12 +103,13 @@ Deno.serve(async(req)=>{
               "Lakache Auto",
               "sales@lakacheautos.com",
               "https://lakacheautos.com"
-            ].join("\\n")
+            ].join("\n")
           })
         });
         if(!receipt.ok)console.error("CRM buyer acknowledgment failed",{status:receipt.status,inquiryId:inquiry.data.id});
-      }catch(err){console.error("CRM buyer acknowledgment exception",{inquiryId:inquiry.data.id,error:String(err)})}
-    }
+        await trackEmail("buyer",receipt.ok?"accepted":"failed");
+      }catch(err){console.error("CRM buyer acknowledgment exception",{inquiryId:inquiry.data.id,error:String(err)});await trackEmail("buyer","failed")}
+    }else await trackEmail("buyer","failed");
     return reply(200,{ok:true});
   }catch(e){console.error("CRM ingestion error",e);return reply(500,{error:"Unable to save inquiry. Please try again."})}
 });
