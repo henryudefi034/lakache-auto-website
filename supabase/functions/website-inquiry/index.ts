@@ -33,8 +33,35 @@ Deno.serve(async(req)=>{
     // New record per inquiry, avoiding accidental merges with unrelated buyers sharing email.
     const buyer=await db.from("crm_buyers").insert({full_name:name,email,phone:phone||null,company:company||null,buyer_type:buyerType||null,destination_country:country||null,marketing_consent:false,verification_status:"unverified"}).select("id").single();
     if(buyer.error)throw buyer.error;
-    const inquiry=await db.from("crm_inquiries").insert({buyer_id:buyer.data.id,vehicle_interest:vehicle||null,message,source:"website",status:"new"});
+    const inquiry=await db.from("crm_inquiries").insert({buyer_id:buyer.data.id,vehicle_interest:vehicle||null,message,source:"website",status:"new"}).select("id").single();
     if(inquiry.error){await db.from("crm_buyers").delete().eq("id",buyer.data.id);throw inquiry.error}
+
+    // A notification failure never rolls back the successfully saved inquiry.
+    const resendKey=Deno.env.get("RESEND_API_KEY");
+    if(resendKey){
+      try{
+        const notice=await fetch("https://api.resend.com/emails",{
+          method:"POST",
+          headers:{"Authorization":`Bearer ${resendKey}`,"Content-Type":"application/json"},
+          body:JSON.stringify({
+            from:"Lakache Auto CRM <notifications@lakacheautos.com>",
+            to:["sales@lakacheautos.com"],
+            subject:"New wholesale inquiry — Lakache Auto",
+            text:[
+              "A new wholesale inquiry has been saved in the private CRM.",
+              `Buyer: ${name}`,`Email: ${email}`,
+              `Phone: ${phone||"Not provided"}`,
+              `Vehicle: ${vehicle||"General inquiry"}`,
+              `Destination: ${country||"Not provided"}`,
+              `Buyer type: ${buyerType||"Not provided"}`,
+              `Inquiry ID: ${inquiry.data.id}`,
+              "Log in to the private CRM to review the inquiry and arrange follow-up."
+            ].join("\n")
+          })
+        });
+        if(!notice.ok)console.error("CRM notification failed",{status:notice.status,inquiryId:inquiry.data.id});
+      }catch(err){console.error("CRM notification exception",{inquiryId:inquiry.data.id,error:String(err)})}
+    }else console.error("CRM notification key missing",{inquiryId:inquiry.data.id});
     return reply(200,{ok:true});
   }catch(e){console.error("CRM ingestion error",e);return reply(500,{error:"Unable to save inquiry. Please try again."})}
 });
