@@ -15,16 +15,16 @@
 (function(){
 'use strict';
 const endpoint='https://nfjehygfkschbfnhigab.supabase.co/functions/v1/swift-processor';
-let token='';const form=document.getElementById('test-form'),result=document.getElementById('result'),button=document.getElementById('submit');
+let token='',pendingSubmissionId=null;const form=document.getElementById('test-form'),result=document.getElementById('result'),button=document.getElementById('submit');
 window.onTurnstileSuccess=function(t){token=t;result.textContent='Verification complete. Ready to send.';result.className=''};
 window.onTurnstileExpired=function(){token='';result.textContent='Verification expired or failed. Please complete it again.';result.className='error'};
 form.addEventListener('submit',async function(event){
 event.preventDefault();if(!token){result.textContent='Please complete the Cloudflare verification first.';result.className='error';return}
 button.disabled=true;result.textContent='Sending test inquiry…';result.className='';
-const data=Object.fromEntries(new FormData(form).entries());data.turnstile_token=token;
+const data=Object.fromEntries(new FormData(form).entries());if(!pendingSubmissionId)pendingSubmissionId=crypto.randomUUID();data.submission_id=pendingSubmissionId;data.turnstile_token=token;
 try{const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});const body=await response.json().catch(()=>({}));
 if(!response.ok||!body.ok)throw new Error(body.error||'HTTP '+response.status);
-result.textContent='Test inquiry submitted successfully. Open the private CRM and verify a new buyer and inquiry appear.';result.className='success';form.reset();
+result.textContent=body.duplicate?'This submission was already received; no duplicate inquiry or emails were created.':'Test inquiry submitted successfully. Check the private CRM and email logs.';result.className='success';pendingSubmissionId=null;form.reset();
 }catch(error){result.textContent='Submission failed: '+error.message;result.className='error'}
 finally{button.disabled=false;token='';if(window.turnstile)window.turnstile.reset()}
 });
