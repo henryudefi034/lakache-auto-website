@@ -14,6 +14,19 @@ document.addEventListener('DOMContentLoaded',function(){
  if(page==='contact.html'){var key=new URLSearchParams(location.search).get('vehicle'),vehicle=vehicleCatalog[key],buyer=document.querySelector('#vehicle-inquiry');if(buyer){var vehicleBox=buyer.querySelector('.vehicle'),buyerCopy=buyer.querySelector('.buyer-copy'),mailbtn=buyer.querySelector('.mailbtn');if(vehicle){if(vehicleBox){var small=vehicleBox.querySelector('small'),strong=vehicleBox.querySelector('strong');if(small)small.textContent='VEHICLE INQUIRY';if(strong)strong.textContent=vehicle.name}if(buyerCopy)buyerCopy.textContent='Send the basics that help us respond intelligently. The vehicle is already identified in the email subject so your inquiry does not get mixed in with general messages.';if(mailbtn){var body='Name:\n\nPhone:\n\nLocation:\n\nBuying timeline:\n\nCash / Financing / Undecided:\n\nTrade-in (if any):\n\n'+vehicle.question+'\n';mailbtn.href='mailto:sales@lakacheautos.com?subject='+encodeURIComponent(vehicle.subject)+'&body='+encodeURIComponent(body);mailbtn.textContent='ASK ABOUT '+vehicle.short+' →'}}else if(mailbtn){mailbtn.href='mailto:sales@lakacheautos.com?subject='+encodeURIComponent('Lakache Auto - Vehicle Buyer Inquiry');mailbtn.textContent='VEHICLE INQUIRY →'}}}
  document.querySelectorAll('a[href^="mailto:info@lakache.com"],a[href^="mailto:info@lakacheauto.com"]').forEach(function(a){a.href=a.href.replace(/info@lakache(?:auto)?\.com/,'sales@lakacheautos.com')});
  document.querySelectorAll('footer').forEach(function(footer){var walker=document.createTreeWalker(footer,NodeFilter.SHOW_TEXT),node;while(node=walker.nextNode()){var value=node.nodeValue;var updated=value.replace(/CARS\s*(?:•|·)\s*BUILDS?\s*(?:•|·)\s*LIFE/gi,'CARS BUILD LIFE').replace(/CARS\s+BUILDS?\s+LIFE/gi,'CARS BUILD LIFE');if(updated!==value)node.nodeValue=updated}});
+ // Official Facebook Page: keep the same Page ID through future name changes.
+ document.querySelectorAll('footer .footer-links').forEach(function(links){
+  if(links.querySelector('a[data-lakache-facebook]'))return;
+  var facebook=document.createElement('a');
+  facebook.href='https://www.facebook.com/profile.php?id=61589841871676';
+  facebook.target='_blank';
+  facebook.rel='noopener noreferrer';
+  facebook.dataset.lakacheFacebook='true';
+  facebook.setAttribute('aria-label','Lakache Auto on Facebook (opens in a new tab)');
+  facebook.textContent='Facebook ↗';
+  links.style.flexWrap='wrap';
+  links.appendChild(facebook);
+ });
  document.querySelectorAll('a[target="_blank"]').forEach(function(a){var rel=(a.getAttribute('rel')||'').split(/\s+/).filter(Boolean);if(rel.indexOf('noopener')<0)rel.push('noopener');a.setAttribute('rel',rel.join(' '))});
  if(nav)nav.querySelectorAll('a').forEach(function(a){var href=a.getAttribute('href');if(href===page)a.setAttribute('aria-current','page')});
  function redPeriod(el){if(!el||el.querySelector('.brand-period'))return;var w=document.createTreeWalker(el,NodeFilter.SHOW_TEXT),nodes=[],n;while(n=w.nextNode())nodes.push(n);for(var i=nodes.length-1;i>=0;i--){var t=nodes[i].nodeValue;if(!/\.\s*$/.test(t))continue;var p=t.lastIndexOf('.'),s=document.createElement('span'),f=document.createDocumentFragment();s.className='brand-period';s.textContent='.';f.appendChild(document.createTextNode(t.slice(0,p)));f.appendChild(s);if(t.slice(p+1))f.appendChild(document.createTextNode(t.slice(p+1)));nodes[i].parentNode.replaceChild(f,nodes[i]);break}}document.querySelectorAll('h1,h2').forEach(redPeriod);
