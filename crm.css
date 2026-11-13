@@ -8,3 +8,5 @@
 .buyer-summary .summary-row span{display:block;min-width:0;overflow-wrap:anywhere;line-height:1.5}
 
 .text-button{background:transparent;border:0;color:#fff;text-decoration:underline;padding:12px 0;font-size:14px}.text-button:hover{color:var(--red)}#recovery{max-width:540px}#recovery p{margin-top:0}
+
+.pipeline-select{display:flex;align-items:center;gap:10px;margin:0;color:var(--muted);font-size:13px}.pipeline-select select{min-width:170px}.sectionhead .pipeline-select{margin-left:auto}@media(max-width:650px){.sectionhead{flex-wrap:wrap}.pipeline-select{width:100%}.pipeline-select select{flex:1}}
