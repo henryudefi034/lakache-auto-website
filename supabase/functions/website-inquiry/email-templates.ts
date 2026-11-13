@@ -63,7 +63,7 @@ export function internalSalesNotification(data: InquiryEmailData): { subject: st
   const rows = panel(
     cell("Name", data.buyerName) + cell("Email", data.buyerEmail) + cell("Phone", data.phone) +
     cell("Vehicle", data.vehicle) + cell("Location", details.location) + cell("Destination", data.destination) +
-    cell("Buyer type", data.buyerType) + cell("Shipping", details.shipping) + cell("Timeline", data.timeline) +
+    cell("Buyer type", data.buyerType) + cell("Shipping", details.shipping) + cell("Timeline", details.timeline) +
     cell("Preferred contact", details.contactPreference) + cell("Reference", data.inquiryId)
   );
   const message = `<div style="padding:15px;background:#f7f7f7;border-left:3px solid #d82332;font-size:14px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere">${show(data.message)}</div>`;
