@@ -21,7 +21,7 @@ export type InquiryEmailData = {
 };
 
 const esc = (value: unknown) => String(value ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
-const shortReference = (id: string) => `LA-${id.replace(/-/g, "").slice(0, 12).toUpperCase()}`;
+const shortReference = (id: string, year = new Date().getUTCFullYear()) => `LA-${year}-${id.replace(/-/g, "").slice(0, 8).toUpperCase()}`;
 const show = (value: unknown) => esc(value || "Not provided");
 const cell = (label: string, value: unknown) => `<tr><td style="padding:12px 14px;color:#666;font-size:13px;border-bottom:1px solid #e9e9e9;width:35%;vertical-align:top">${esc(label)}</td><td style="padding:12px 14px;color:#202124;font-size:13px;font-weight:600;border-bottom:1px solid #e9e9e9;overflow-wrap:anywhere">${show(value)}</td></tr>`;
 const panel = (rows: string) => `<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="border:1px solid #e5e5e5;border-collapse:collapse">${rows}</table>`;
