@@ -13,3 +13,6 @@
 
 /* Phase 2: buyer contact summaries and follow-up planner */
 .followup-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.followup-stats>div{padding:15px;background:#12181b;border:1px solid var(--line);border-radius:8px}.followup-stats strong{display:block;font-size:28px}.followup-stats span{font-size:13px;color:var(--muted)}.followup-badge{display:inline-block;border:1px solid var(--line);border-radius:5px;padding:3px 8px;font-size:12px;margin:0 8px 8px 0}.followup-badge.overdue{color:#ffb5b9;border-color:#b84a50}.followup-badge.today{color:#f9d98a;border-color:#aa8740}.followup-badge.upcoming{color:#a6d7ee;border-color:#527c90}.buyer-contact{display:flex;flex-wrap:wrap;gap:5px 12px;margin:6px 0 10px;color:var(--muted);font-size:12px;overflow-wrap:anywhere}.buyer-contact span{max-width:100%}@media(max-width:600px){.followup-stats{grid-template-columns:1fr 1fr 1fr}.followup-stats>div{padding:10px}.followup-stats strong{font-size:24px}}
+
+/* Phase 3: exportable follow-up worklist */
+.planner-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px}.planner-actions button{white-space:nowrap}@media(max-width:700px){.planner-actions{width:100%}.planner-actions button{width:100%}}
