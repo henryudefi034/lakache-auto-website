@@ -6,3 +6,5 @@
 .buyer-summary .summary-row{display:grid;grid-template-columns:minmax(105px,32%) minmax(0,1fr);align-items:start;column-gap:14px;padding:9px 0;border-bottom:1px solid #30393e}
 .buyer-summary .summary-row small{display:block;color:var(--muted);font-size:12px;line-height:1.5}
 .buyer-summary .summary-row span{display:block;min-width:0;overflow-wrap:anywhere;line-height:1.5}
+
+.text-button{background:transparent;border:0;color:#fff;text-decoration:underline;padding:12px 0;font-size:14px}.text-button:hover{color:var(--red)}#recovery{max-width:540px}#recovery p{margin-top:0}
