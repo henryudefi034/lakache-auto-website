@@ -38,18 +38,39 @@ export function customerConfirmation(data: InquiryEmailData): { subject: string;
   };
 }
 
+
+// The public website currently appends these answers to the message text.
+// Extract only recognized, labeled lines; preserve all original message text.
+const inquiryDetails = (data: InquiryEmailData) => {
+  const lines = (data.message || "").split(/\r?\n/);
+  const find = (labels: string[]) => {
+    for (const line of lines) {
+      const match = line.match(/^\s*([^:]{2,45}):\s*(.*?)\s*$/);
+      if (match && labels.includes(match[1].trim().toLowerCase()) && match[2]) return match[2];
+    }
+    return undefined;
+  };
+  return {
+    location: data.location || find(["city / region", "city/region", "city", "location"]),
+    shipping: data.shipping || find(["shipping arrangements", "shipping arrangement", "shipping"]),
+    timeline: data.timeline || find(["buying timeline", "timeline"]),
+    contactPreference: data.contactPreference || find(["preferred contact", "contact preference"])
+  };
+};
+
 export function internalSalesNotification(data: InquiryEmailData): { subject: string; html: string; text: string } {
+  const details = inquiryDetails(data);
   const rows = panel(
     cell("Name", data.buyerName) + cell("Email", data.buyerEmail) + cell("Phone", data.phone) +
-    cell("Vehicle", data.vehicle) + cell("Location", data.location) + cell("Destination", data.destination) +
-    cell("Buyer type", data.buyerType) + cell("Shipping", data.shipping) + cell("Timeline", data.timeline) +
-    cell("Preferred contact", data.contactPreference) + cell("Reference", data.inquiryId)
+    cell("Vehicle", data.vehicle) + cell("Location", details.location) + cell("Destination", data.destination) +
+    cell("Buyer type", data.buyerType) + cell("Shipping", details.shipping) + cell("Timeline", data.timeline) +
+    cell("Preferred contact", details.contactPreference) + cell("Reference", data.inquiryId)
   );
   const message = `<div style="padding:15px;background:#f7f7f7;border-left:3px solid #d82332;font-size:14px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere">${show(data.message)}</div>`;
   const body = p("A new inquiry has been submitted through the Lakache Auto website. Review the details below and arrange follow-up.") + h("Buyer information") + rows + h("Customer message") + message + h("Next action") + p("Review this inquiry in Supabase CRM, verify the buyer's requirements, and schedule follow-up.");
   return {
     subject: `New vehicle inquiry — ${data.vehicle || "Lakache Auto"}`,
     html: shell("New buyer inquiry received.", "LAKACHE AUTO CRM", "New buyer inquiry", body, "Internal notification · Lakache Auto CRM · Do not forward externally."),
-    text: `New Lakache Auto inquiry\n\nName: ${data.buyerName}\nEmail: ${data.buyerEmail}\nPhone: ${data.phone || "Not provided"}\nVehicle: ${data.vehicle || "Not provided"}\nLocation: ${data.location || "Not provided"}\nDestination: ${data.destination || "Not provided"}\nBuyer type: ${data.buyerType || "Not provided"}\nShipping: ${data.shipping || "Not provided"}\nTimeline: ${data.timeline || "Not provided"}\nPreferred contact: ${data.contactPreference || "Not provided"}\nReference: ${data.inquiryId}\n\nMessage:\n${data.message || "Not provided"}\n\nReview and follow up in Supabase CRM.`
+    text: `New Lakache Auto inquiry\n\nName: ${data.buyerName}\nEmail: ${data.buyerEmail}\nPhone: ${data.phone || "Not provided"}\nVehicle: ${data.vehicle || "Not provided"}\nLocation: ${details.location || "Not provided"}\nDestination: ${data.destination || "Not provided"}\nBuyer type: ${data.buyerType || "Not provided"}\nShipping: ${details.shipping || "Not provided"}\nTimeline: ${details.timeline || "Not provided"}\nPreferred contact: ${details.contactPreference || "Not provided"}\nReference: ${data.inquiryId}\n\nMessage:\n${data.message || "Not provided"}\n\nReview and follow up in Supabase CRM.`
   };
 }
