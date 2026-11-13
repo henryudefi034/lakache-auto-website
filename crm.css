@@ -16,3 +16,6 @@
 
 /* Phase 3: exportable follow-up worklist */
 .planner-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px}.planner-actions button{white-space:nowrap}@media(max-width:700px){.planner-actions{width:100%}.planner-actions button{width:100%}}
+
+/* Phase 3B: structured activity types (compatible with existing notes) */
+.activity-type{display:inline-block;font-size:.75rem;font-weight:700;color:#f43f4e;border:1px solid #74313a;border-radius:4px;padding:2px 7px;margin:0 8px 7px 0}
