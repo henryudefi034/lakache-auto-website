@@ -19,3 +19,7 @@
 
 /* Phase 3B: structured activity types (compatible with existing notes) */
 .activity-type{display:inline-block;font-size:.75rem;font-weight:700;color:#f43f4e;border:1px solid #74313a;border-radius:4px;padding:2px 7px;margin:0 8px 7px 0}
+
+/* Phase 3B staff ownership */
+.owner-filter{display:flex;align-items:center;gap:10px;margin:0 0 12px;max-width:340px}
+.owner-filter select{min-width:160px}
